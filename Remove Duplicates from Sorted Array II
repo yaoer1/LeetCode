@@ -1,0 +1,41 @@
+//解法1
+class Solution {
+public:
+    int removeDuplicates(int A[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int cur = 0, i = 0;
+        bool count;
+        while(i < n){
+            count = true;
+            A[cur] = A[i++];
+            while(i < n && A[cur] == A[i]){
+                if(count) {
+                    A[++cur] = A[i];
+                    count = false;                   
+                }
+                i++;
+            }
+            ++cur;
+        }
+        return cur;
+    }
+};
+
+//解法二：
+class Solution {
+public:
+    int removeDuplicates(int A[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int cur = 0, i = 0, count;
+        while(i < n){
+            count = 1;
+            A[cur] = A[i++];
+            while(i < n && A[cur] == A[i])
+                count-- > 0 ? A[++cur] = A[i++] : i++;     //count有越界问题       
+            ++cur;
+        }
+        return cur;
+    }
+};
