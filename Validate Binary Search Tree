@@ -1,0 +1,71 @@
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    bool isValidBST(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(root==NULL) return true;
+        TreeNode *p=root;
+        while(p->left) p=p->left;
+        int left = p->val-1;
+        p=root;
+        while(p->right) p=p->right;
+        int right = p->val+1;
+        return isValidBST(root,left,right);
+    }
+   
+    bool isValidBST(TreeNode *root, int left, int right)
+    {
+        if(root==NULL) return true;
+        if(left<root->val && root->val<right)
+            return isValidBST(root->left,left,root->val) && isValidBST(root->right,root->val,right);
+         
+        return false;
+    }
+};
+
+
+//min max表示树的最大最小值
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    bool isValidBST(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(!root) return true;
+        TreeNode *min = NULL, *max = NULL;
+        return isValidBST(root,&max,&min);
+    }
+  
+    bool isValidBST(TreeNode *root, TreeNode **min, TreeNode **max){
+        bool flag = true;
+        TreeNode *l = NULL, *r = NULL;
+        if(root->left){
+            flag = flag && isValidBST(root->left, &l, &r) && r->val < root->val;
+            *min = l;
+        }
+        else *min = root;
+        if(root->right){
+            flag = flag && isValidBST(root->right, &l, &r) && l->val > root->val;
+            *max = r;
+        }
+        else *max = root;
+        return flag;
+    }
+};
