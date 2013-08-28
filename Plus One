@@ -1,0 +1,17 @@
+//在容器前添加一位
+//从最后一位开始，每一位加1，直到该位没有进位
+class Solution {
+public:
+    vector<int> plusOne(vector<int> &digits) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        size_t n = digits.size();
+        digits.insert(digits.begin(),1,0);
+        for(int i = n; i >= 0; i--){ 
+            if(++digits[i]<10) break;
+            digits[i] %= 10;
+        }
+        if(digits[0] == 0) digits.erase(digits.begin());
+        return digits;
+    }
+};
