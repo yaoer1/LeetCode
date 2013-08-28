@@ -1,0 +1,26 @@
+//用set保存数组元素or哈希表
+class Solution {
+public:
+    int longestConsecutive(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        set<int> s(num.begin(),num.end());
+        long long asc, des, longest = 0;
+        while(!s.empty()){
+            int x = (*s.begin());
+            s.erase(x);
+            asc = x + 1;
+            des = x - 1;
+            while(s.count(asc)){
+                s.erase(asc);
+                ++asc;
+            }
+            while(s.count(des)){
+                s.erase(des);
+                --des;
+            }
+            longest = max(longest, asc-des-1);
+        }
+        return longest;
+    }
+};
