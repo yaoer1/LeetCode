@@ -1,0 +1,42 @@
+//添加头节点 注意m，n的取值范围
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode(int x) : val(x), next(NULL) {}
+* };
+*/
+class Solution {
+public:
+    ListNode *reverseBetween(ListNode *head, int m, int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(head == NULL || m<1 || n<1 || n-m<1) return head;
+        size_t t = n - m + 1;
+        ListNode *addHead = new ListNode (-1);
+        addHead->next = head;
+        ListNode *prev, *last;
+        prev = addHead;
+        while(--m && prev) prev = prev->next;
+        if(m || prev->next==NULL) return head;
+        last = prev->next;
+        while(--t && last) last = last->next;
+        if(t || last==NULL) return head;
+        ListNode *p, *q, *r;
+        p = prev->next;
+        q = p->next;
+        prev->next = last;
+        p->next = last->next;
+        while(p != last){
+            r = q->next;
+            q->next = p;
+            p = q;
+            q = r;
+        }
+        head = addHead->next;
+        delete addHead;
+        addHead = NULL;
+        return head;
+    }
+};
