@@ -1,0 +1,25 @@
+//递归
+//还可以采用左子树前序遍历，右子树后序遍历比较
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    bool isSymmetric(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        return (root==NULL) ? true : isSymmetric(root->left,root->right);
+    }
+   
+    bool isSymmetric(TreeNode *treeA, TreeNode *treeB) {
+        if(treeA == NULL && treeB == NULL) return true;
+        if(treeA == NULL || treeB == NULL) return false;
+        return treeA->val == treeB->val && isSymmetric(treeA->left,treeB->right) && isSymmetric(treeA->right,treeB->left);
+    }
+};
