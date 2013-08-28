@@ -1,0 +1,11 @@
+//注意考虑m=0 n=0的情况 从后往前写
+class Solution {
+public:
+    void merge(int A[], int m, int B[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int i = m + n;
+        while(n > 0)
+            A[--i] = (m > 0 && A[m-1] > B[n-1]) ? A[--m] : B[--n];
+    }
+};
