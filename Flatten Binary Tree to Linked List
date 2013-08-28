@@ -1,0 +1,36 @@
+递归，将左右子树都flat，并记录左右子树的根节点和last节点，再将左右子树结合
+注意：flat的参数last是** 否则函数传值调用不会修改last指向的节点
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    void flatten(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(root == NULL) return ;
+        TreeNode *last = NULL;//不需要new
+        flat(root,&last);
+    }
+  
+    void flat(TreeNode *root, TreeNode **last){
+        if(root->left == NULL && root->right == NULL){
+            *last = root;
+            return ;
+        }
+        TreeNode *last1 = NULL;//不需要new
+        if(root->left) flat(root->left,&last1);
+        else last1 = root;
+        if(root->right) flat(root->right,last);
+        else *last = last1;
+        last1->right = root->right;
+        if(root->left) root->right = root->left;      
+        root->left = NULL;
+    }
+};
