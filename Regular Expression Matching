@@ -1,0 +1,60 @@
+解法一：递归
+16ms 92ms
+class Solution {
+public:
+    bool isMatch(const char *s, const char *p) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function   
+        if (s == NULL || p == NULL || *p == '*') return false;
+        if (*p == '\0') return (*s == '\0');
+        if(*(p + 1) == '*'){
+            while((*s != '\0' && *p == '.') || *p == *s){
+                if(isMatch(s,p+2))
+                    return true;
+                ++s;                   
+            }  
+            return isMatch(s,p+2);
+        }
+        else if((*s != '\0' && *p == '.') || *s == *p)
+            return isMatch(s+1,p+1);
+        return false;
+    }
+};
+
+解法二：DP
+8ms 36ms
+class Solution {
+public:
+    bool isMatch(const char *s, const char *p) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function   
+        if (s == NULL || p == NULL || *p == '*') return false;
+        if (*p == '\0') return (*s == '\0');
+        int sl = strlen(s), pl = strlen(p);
+        vector<vector<bool> > dp(sl+1,vector<bool>(pl+1,false));
+        dp[sl][pl] = true;
+        for(int i = pl - 1; i >= 0; i--) //必须从后往前
+            if(i < pl - 1 && p[i+1] == '*') dp[sl][i] = dp[sl][i+2];
+       
+        if(sl && pl) dp[sl-1][pl-1] = (s[sl-1] == p[pl-1] || p[pl-1] == '.');//考虑sl == 0  s=""的情况
+
+        for(int i = sl - 1; i >= 0; i--){           
+            for(int j = pl - 2; j >= 0; j--){
+                int k = i;
+                if(p[j+1] == '*'){
+                    while((s[k] != '\0' && p[j] == '.') || p[j] == s[k]){
+                        if(dp[k][j+2] == true){
+                            dp[i][j] = true;
+                            break;
+                        }
+                        k++;
+                    }
+                    if(dp[i][j] == false) dp[i][j] = dp[k][j+2];
+                }
+                else if((s[i] != '\0' && p[j] == '.') || p[j] == s[i])
+                    dp[i][j] = dp[i+1][j+1];
+            }
+        }       
+        return dp[0][0];
+    }
+};
