@@ -1,0 +1,31 @@
+//1.注意head 和 head->next是null的情况
+//2.删除节点
+//3.与cur指针的值比较，相同的就删掉
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode(int x) : val(x), next(NULL) {}
+* };
+*/
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(head == NULL || head->next == NULL) return head;
+        ListNode *cur, *next;
+        cur = head;
+        while(cur){
+            next = cur->next;
+            while(next && cur->val == next->val){
+                delete next;      
+                next = next->next;
+            }
+            cur->next = next;
+            cur = next;
+        }
+        return head;
+    }
+};
