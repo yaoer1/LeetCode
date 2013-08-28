@@ -1,0 +1,36 @@
+//两个有序链表合并
+//通过变换lmin lmax链接
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode(int x) : val(x), next(NULL) {}
+* };
+*/
+class Solution {
+public:
+    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(!l1) return l2;
+        if(!l2) return l1;
+        ListNode *head, *lmin, *lmax, *tmp;
+        l1->val<=l2->val ? (lmin=l1,lmax=l2) : (lmin=l2,lmax=l1);
+        head = lmin;
+        while(1){
+            while(lmin->next && lmin->next->val<=lmax->val) lmin = lmin->next;
+            if(!lmin->next){
+                lmin->next = lmax;
+                break;
+            }
+            else{
+                tmp = lmin->next;
+                lmin->next = lmax;
+                lmin = lmax;
+                lmax = tmp;
+            }
+        }
+        return head;
+    }
+};
