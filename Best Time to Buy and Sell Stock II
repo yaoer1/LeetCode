@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int n = prices.size();
+        if(n < 2) return 0;
+        int start, i = 0, maxprofit = 0;
+        while(i < n){
+            start = i;
+            while(i + 1 < n && prices[i] < prices[i+1]) ++i;
+            maxprofit += prices[i++] - prices[start];
+        }
+        return maxprofit;
+    }
+};
