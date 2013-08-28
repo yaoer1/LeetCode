@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int m = obstacleGrid.size();
+        if(m == 0) return 0;
+        int n = obstacleGrid[0].size();
+        if(n == 0) return 0;
+        vector<int> grid(n,0);
+        for(int i = 0; i < n; i++)
+            if(obstacleGrid[0][i] == 0) grid[i] = 1;
+            else break;
+           
+        for(int i = 1; i < m; i++){
+            if(obstacleGrid[i][0]) grid[0] = 0;
+            for(int j = 1; j < n; j++)
+                obstacleGrid[i][j] ? grid[j] = 0 : grid[j] += grid[j-1];
+        }
+        return *(grid.end()-1);
+    }
+};
