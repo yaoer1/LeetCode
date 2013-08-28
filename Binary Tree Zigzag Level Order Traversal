@@ -1,0 +1,41 @@
+用一个flag表示每层遍历方向
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ret;
+        if(!root) return ret;
+        queue<TreeNode *> qcur, qtmp;
+        vector<int> ivec;
+        TreeNode *p;
+        qcur.push(root);
+        bool flag = false;
+        while(!qcur.empty()){
+            p = qcur.front();
+            if(flag == false) ivec.push_back(p->val);
+            else ivec.insert(ivec.begin(),p->val);
+//(flag == false) ? ivec.push_back(p->val) : ivec.insert(ivec.begin(),1,p->val);            
+//如果这样的话insert的返回值ivec.insert(ivec.begin(),1,p->val);  是void ivec.insert(ivec.begin(),p->val);  是iterator
+            qcur.pop();
+            if(p->left) qtmp.push(p->left);
+            if(p->right) qtmp.push(p->right);
+            if(qcur.empty()){
+                qcur.swap(qtmp);
+                ret.push_back(ivec);
+                ivec.clear();
+                flag = !flag;
+            }
+        }
+        return ret;   
+    }
+};
