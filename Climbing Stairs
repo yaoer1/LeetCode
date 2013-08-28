@@ -1,0 +1,13 @@
+//注意x，y一开始都是1
+class Solution {
+public:
+    int climbStairs(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(n<=1) return n;
+        int x = 1, y = 1, z;
+        for(int i = 2; i < n + 1; i++)       
+            z = x + y, x = y, y = z; 
+        return z;
+    }
+};
