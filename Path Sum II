@@ -1,0 +1,34 @@
+//设置全局变量result，当递归满足条件时，添加结果到result
+//不用递归函数返回局部结果
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    vector<vector<int> > pathSum(TreeNode *root, int sum) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        result.clear();
+        pathSum(root,sum,vector<int>());
+        return result;
+    }
+   
+    void pathSum(TreeNode *root, int sum, vector<int> path){
+        if(!root) return ;       
+        path.push_back(root->val);
+        if(!root->left && !root->right){
+            if(root->val == sum) result.push_back(path);           
+            return ;
+        }
+        pathSum(root->left,sum-root->val,path);
+        pathSum(root->right,sum-root->val,path);
+    }
+   
+    vector<vector<int> > result;
+};
