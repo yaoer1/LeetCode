@@ -1,0 +1,14 @@
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<int> ret(1,1);
+        for(int i = 0; i < rowIndex; i++){
+            for(int j = ret.size(); j > 0; j--)
+                ret[j] += ret[j-1];
+            ret.push_back(1);
+        }
+        return ret;
+    }
+};
