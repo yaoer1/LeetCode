@@ -1,0 +1,39 @@
+//可能头结点也会被删除，可以在head之前再添加一个头结点
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode(int x) : val(x), next(NULL) {}
+* };
+*/
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(head ==NULL || head->next ==NULL) return head;
+        ListNode *addHead = new ListNode(-1);
+        addHead->next = head;
+        ListNode *jmp, *cur, *next;
+        bool flag;
+        jmp = addHead;
+        cur = head;
+        while(cur){
+            flag = true;
+            next = cur->next;
+            while(next && cur->val == next->val){
+                flag = false;
+                delete next;
+                next = next->next;
+            }
+            if(flag == false){
+                jmp->next = next;
+                delete cur;
+            }
+            else jmp = cur;
+            cur = next;
+        }
+        return addHead->next;
+    }
+};
