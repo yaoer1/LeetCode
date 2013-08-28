@@ -1,0 +1,63 @@
+//递归
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        ret.clear();
+        inorder(root);
+        return ret;
+    }
+    void inorder(TreeNode *root){
+        if(root){
+            inorder(root->left);
+            ret.push_back(root->val);
+            inorder(root->right);
+        }
+    }
+    vector<int> ret;
+};
+
+//堆栈
+//向左一直遍历，入栈，遇到空节点从栈中取一个节点继续中序遍历
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<int> ret;
+        stack<TreeNode *> s;
+        TreeNode *cur = root;
+        while(cur || !s.empty()){
+            while(cur){
+                s.push(cur);
+                cur = cur->left;               
+            }
+            if(!s.empty()){
+                cur = s.top();
+                s.pop();
+                ret.push_back(cur->val);
+                cur = cur->right;
+            }
+        }
+        return ret;
+    }
+};
