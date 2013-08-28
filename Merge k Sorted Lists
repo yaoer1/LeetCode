@@ -1,0 +1,65 @@
+
+//堆排序 每次将堆顶元素加入链表
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode(int x) : val(x), next(NULL) {}
+* };
+*/
+class Solution {
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        size_t n = lists.size();
+        vector<ListNode *>::iterator iter = lists.begin();
+        while(iter != lists.end())
+            (*iter == NULL) ? (lists.erase(iter)) : (++iter);
+        vector<ListNode *> A(lists);
+        A.insert(A.begin(),NULL);
+        BuildHeap(A);
+        ListNode *head = new ListNode(-1);
+        ListNode *cur = head;
+        n = lists.size();
+        while(n){
+            ListNode *tmp = new ListNode(A[1]->val);
+            cur->next = tmp;
+            cur = cur->next;
+            A[1] = A[1]->next;
+            if(A[1] == NULL){
+                --n;
+                if(n == 0) break;
+                A[1] = A[n+1];
+                PercDown(A,1,n);
+            }
+            else
+                PercDown(A,1,n);
+        }
+        return head->next;
+    }
+   
+    void PercDown(vector<ListNode *> &A, int i, int n)
+    {
+        int l, r, smallest;
+        while(i<=(n>>1)){
+            {l = (i<<1), r = l + 1, smallest = i;}
+            if(l <= n && A[i]->val > A[l]->val) smallest = l;
+            if(r <= n && A[smallest]->val > A[r]->val) smallest = r;
+            if(smallest==i) return ;
+            ListNode *tmp = A[i];
+            A[i] = A[smallest];
+            A[smallest] = tmp;
+            i = smallest;
+        }
+    }
+   
+    void BuildHeap(vector<ListNode *> &A)
+    {
+        size_t n = A.size()-1;
+        for(int i=(n>>1);i>=1;i--){
+            PercDown(A,i,n);
+        }
+    }
+};
