@@ -1,0 +1,28 @@
+//左右子树节点个数相同或只相差1，递归
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    TreeNode *sortedArrayToBST(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int n = num.size();
+        return sortedArrayToBST(num,0,n-1);
+    }
+  
+    TreeNode *sortedArrayToBST(vector<int> &num, const int beg, const int end){
+        if(beg>end) return NULL;
+        int mid = beg + ((end - beg)>>1);      
+        TreeNode *root = new TreeNode(num[mid]);
+        root->left = sortedArrayToBST(num,beg,mid-1);
+        root->right = sortedArrayToBST(num,mid+1,end);
+        return root;
+    }
+};
