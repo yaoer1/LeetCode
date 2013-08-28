@@ -1,0 +1,44 @@
+2013/8/26 
+DP
+为什么不能把root提到第一层循环内去
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+    vector<TreeNode *> generateTrees(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        return generateTrees(1,n);
+    }
+   
+    vector<TreeNode *> generateTrees(int beg, int end)
+    {
+        vector<TreeNode *>tvec;
+        if(beg > end){
+            tvec.push_back(NULL);
+            return tvec;   
+        }      
+
+        for(int i = beg; i < end + 1; i++){           
+            vector<TreeNode *> lvec = generateTrees(beg,i - 1);
+            vector<TreeNode *> rvec = generateTrees(i + 1,end);
+            for(int k1 = 0; k1 < lvec.size(); k1++){                                    
+                for(int k2 = 0; k2 < rvec.size(); k2++){     
+                    TreeNode *root = new TreeNode(i);
+                    root->left = lvec[k1];
+                    root->right = rvec[k2];  
+                    tvec.push_back(root);
+                }
+            }
+        }
+        return tvec;
+    }
+};
+
