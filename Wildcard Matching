@@ -1,0 +1,38 @@
+//递归时间开销大，DP空间开销大
+class Solution {
+public:
+    bool isMatch(const char *s, const char *p) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        const char *str = s;
+        const char *ptr = p;
+        bool star = false;
+        while(*str != '\0'){
+            if(*ptr == '?'){
+                ++ptr;
+                ++str;
+            }
+            else if(*ptr == '*'){
+                star = true;
+                p = ptr;
+                s = str;
+                while(*p == '*') ++p;
+                if(*p == '\0') return true;
+                ptr = p;
+            }
+            else
+                if(*str != *ptr){
+                    if(!star) return false;
+                    ++s;
+                    str=s;
+                    ptr=p;
+                }
+                else {
+                    ++str;
+                    ++ptr;
+                }
+        }
+        while(*ptr=='*') ++ptr;
+        return *ptr=='\0';        
+    }
+};
