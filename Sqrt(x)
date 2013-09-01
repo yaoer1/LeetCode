@@ -1,0 +1,12 @@
+//牛顿迭代法
+class Solution {
+public:
+    int sqrt(int x) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        double i = 1;
+        while(abs(i * i - x) > 0.0001)
+            i=(i + x / i) / 2;
+        return (int)i;
+    }
+};
