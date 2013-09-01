@@ -25,8 +25,10 @@ public:
     }
     
     bool IsRange(int num, int i){
-        if(i == 1) return (num >= 0 && num < 10);
-        if(i == 2) return (num > 9 && num < 100);
-        if(i == 3) return (num > 99 && num < 256);
+        switch(i){
+            case 1: return (num >= 0 && num < 10);
+            case 2: return (num > 9 && num < 100);
+            case 3: return (num > 99 && num < 256);
+        }
     }
 };
