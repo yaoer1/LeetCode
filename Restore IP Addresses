@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<string> vstr;
+    vector<string> restoreIpAddresses(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vstr.clear();
+        restoreIpAddresses(s,4,string());
+        return vstr;
+    }
+    
+    void restoreIpAddresses(string s, int n, string ipaddr){        
+         if(n == 0){
+               if(s.empty()) vstr.push_back(string(ipaddr.begin(),ipaddr.end()-1));
+            return ;
+        }
+        int num = 0;
+        for(int i = 1; i < 4; i++){
+               if(s.size() >= i){
+                    num = num * 10 + s[i-1] - '0';
+                    if(IsRange(num,i))
+                         restoreIpAddresses(s.substr(i,s.length()),n-1,ipaddr+string(s.begin(),s.begin()+i)+'.');
+               }                
+        }
+    }
+    
+    bool IsRange(int num, int i){
+        if(i == 1) return (num >= 0 && num < 10);
+        if(i == 2) return (num > 9 && num < 100);
+        if(i == 3) return (num > 99 && num < 256);
+    }
+};
