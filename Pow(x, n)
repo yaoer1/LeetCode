@@ -1,0 +1,19 @@
+//分治法
+//需要考虑幂指数是0和负数的情况以及底数是0的情况
+class Solution {
+public:
+    double pow(double x, int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(n == 0) return 1;
+        if(abs(x-0) < 0.0001) return 0;
+        int sign = 0;
+        if(n < 0){
+            n = -n;
+            ++sign;
+        }
+        double res = pow(x,(n>>1));
+        res *= ((n & 0x1) ? res * x: res);
+        return (sign) ? 1/res : res;        
+    }
+};
