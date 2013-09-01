@@ -1,0 +1,26 @@
+//递归
+class Solution {
+public:
+    vector<string> vstr;
+    vector<string> generateParenthesis(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vstr.clear();
+        generate(n,n,string());
+        return vstr;
+    }
+    
+    void generate(int left, int right, string s){
+        if(left == 0 && right == 0) {
+            vstr.push_back(s);
+            return ;
+        }
+        if(left < right){
+            generate(left,right-1,s+")");
+            if(left > 0)
+                generate(left-1,right,s+"(");
+        }
+        else if(left == right)
+            generate(left-1,right,s+"(");
+    }
+};
