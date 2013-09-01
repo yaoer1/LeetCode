@@ -1,0 +1,27 @@
+//位运算
+//注意负数情况,会死循环
+class Solution {
+public:
+    int sum;
+    int upperlim;
+    int totalNQueens(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        sum = 0;
+        upperlim = (1 << n) - 1;
+        test(0,0,0);
+        return sum;
+    }
+   
+    void test(size_t row, size_t ld, size_t rd){
+        if(upperlim == row) ++sum;
+        else{
+            unsigned long pos = upperlim & ~(row | ld | rd); 
+            while(pos){
+                unsigned long p = pos & -pos;
+                pos -= p;
+                test(row + p, (ld + p) << 1, (rd + p) >> 1);
+            }
+        }
+    }
+};
