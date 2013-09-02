@@ -1,0 +1,31 @@
+//注意：需要把被除数和除数及结果由int转成longlong，类似二分
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(dividend == 0) return 0;
+        int sign = 1;
+        long long end = dividend, sor = divisor;
+        if(end < 0){
+            end = -end;
+            sign = -sign;
+        }
+        if(sor < 0){
+            sor = -sor;
+            sign = -sign;
+        }
+        long long res = 0;
+        while(end >= sor){
+            long long m = 1;
+            long long divisortmp = sor;
+            while(end >= divisortmp){
+                m <<= 1;
+                divisortmp <<= 1;
+            }
+            end -= (divisortmp>>1);
+            res += (m>>1);
+        }
+        return sign == 1 ? res : -res;
+    }
+};
