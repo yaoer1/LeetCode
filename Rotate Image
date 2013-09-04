@@ -1,0 +1,13 @@
+void rotate(vector<vector<int> > &matrix) 
+{
+    int n = matrix.size();
+    for(int start = 0; start < (n>>1); ++start){
+        for(int i = start; i < n - 1 - start; i++){
+            int tmp = matrix[start][i];
+            matrix[start][i] = matrix[n-1-i][start];
+            matrix[n-1-i][start] = matrix[n-1-start][n-i-1];
+            matrix[n-1-start][n-i-1] = matrix[i][n-start-1];
+            matrix[i][n-start-1] = tmp;
+        }
+    }
+}
