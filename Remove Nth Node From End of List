@@ -1,5 +1,4 @@
-//特殊情况 head==NULL || n>链表长度 || n<=0 
-//可以在head之前添加一个头结点方便删除第一个节点和其他情况
+//用指向指针的指针删除节点
 /**
 * Definition for singly-linked list.
 * struct ListNode {
@@ -13,24 +12,19 @@ public:
     ListNode *removeNthFromEnd(ListNode *head, int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        if(head == NULL || n<1) return head; 
-        ListNode *addHead = new ListNode(-1);添加一个头结点
-        addHead->next = head;
-        ListNode *prev = addHead, *last = head;
-        while(--n && last)
-            last = last->next;
-        if(n>0 || last == NULL) return head;
+        if(head == NULL || n < 1) return head; 
+        ListNode **newhead = &head, **cur = &head;
+        ListNode *last = head;
+        while(--n && last) last = last->next;
+        if(n || last == NULL) return head;
         while(last->next){
             last = last->next;
-            prev = prev->next;
-        }找到被删除节点的前一个节点
-        ListNode *tmp = prev->next;
-        prev->next = tmp->next;
+            cur = &((*cur)->next);
+        }
+        ListNode *tmp = *cur;
+        *cur = tmp->next;
         delete tmp;
         tmp = NULL;
-        head = addHead->next;
-        delete addHead;
-        addHead = NULL;
-        return head;
+        return *newhead;
     }
 };
