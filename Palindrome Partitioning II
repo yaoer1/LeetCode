@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minCut(string s) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        int size = s.length();
+        if(size == 0) return 0;
+        vector<vector<bool>> dp(size,vector<bool>(size,false));
+        for(int i = 0; i < size; i++) dp[i][i]=true;
+        for(int i = 0; i < size - 1; i++) dp[i][i+1] = (s[i] == s[i+1]);
+        for(int pace = 2; pace < size; pace++)
+            for(int i = 0; i + pace < size; i++)
+                dp[i][i+pace] = ((s[i]==s[i+pace]) ? dp[i+1][i+pace-1] : false);
+        vector<int> num(size);
+        for(int i = 0; i < size; ++i){
+            if(dp[0][i]) num[i] = 0;
+            else{
+                int tmp = i;
+                for(int j = 1; j <= i; j++) tmp = (dp[j][i]) ? min(num[j-1]+1,tmp) : tmp;
+                num[i] = tmp;
+            }
+        }
+        return num[size-1];
+    }
+};
