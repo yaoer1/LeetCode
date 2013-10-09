@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int numDistinct(string S, string T) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        int size1 = S.length(), size2 = T.length();
+        vector<vector<int> > dp(size1+1, vector<int>(size2+1,0));
+        for(int i = 0; i <= size1; i++) dp[i][size2] = 1;
+        for(int i = size2 - 1; i >= 0; i--)
+            for(int j = size1 - 1; j >= 0; j--)
+                dp[j][i] = (S[j] == T[i]) ? dp[j+1][i+1] + dp[j+1][i] : dp[j+1][i];
+        return dp[0][0];
+    }
+};
