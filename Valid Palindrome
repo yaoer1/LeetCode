@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        int size = s.length();
+        int l = 0, r = size - 1;
+        while(l < size && r >= 0 && l < r){
+            if(!isalpha(s[l]) && !isdigit(s[l])){
+                ++l;
+                continue;
+            } 
+            if(!isalpha(s[r]) && !isdigit(s[r])){
+                --r;
+                continue;
+            } 
+            if(toupper(s[l]) != toupper(s[r])) return false;
+            ++l;
+            --r;
+        }
+        return true;
+    }
+};
