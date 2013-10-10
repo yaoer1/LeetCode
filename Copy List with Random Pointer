@@ -1,0 +1,38 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * struct RandomListNode {
+ *     int label;
+ *     RandomListNode *next, *random;
+ *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    RandomListNode *copyRandomList(RandomListNode *head) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        if(!head) return NULL;
+        RandomListNode *cur = head;
+        while(cur){
+            RandomListNode *t = new RandomListNode(cur->label);
+            t->next = cur->next;
+            cur->next = t;
+            cur = t->next;
+        }
+        cur = head;
+        RandomListNode *newhead = head->next;
+        RandomListNode *p;
+        while(cur){
+            p = cur->next;
+            p->random = (cur->random) == NULL ? NULL : (cur->random)->next;
+            cur = cur->next->next;
+        }
+        cur = head;
+        while(cur){
+            p = cur->next;
+            cur->next = p->next;
+            cur = p->next;
+            p->next = (cur == NULL) ? NULL : cur->next;
+        }
+        return newhead;
+    }
+};
