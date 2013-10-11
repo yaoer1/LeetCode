@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int jump(int A[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if(n < 2) return 0;
+    	int rmax = A[0], res = 1, start = 1;
+    	while(rmax < n - 1){
+    		if(start > rmax) return -1;
+    		int rm = rmax;
+    		for(int i = start; i < n && i <= rmax; i++)
+    		    rm = max(rm,i+A[i]);
+    		++res;
+    		start = rmax + 1;
+    		rmax = rm;
+    	}
+    	return res;
+    }
+};
